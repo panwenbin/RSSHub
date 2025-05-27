@@ -4978,6 +4978,15 @@
     "_name": "Anthropic",
     "www": [
       {
+        "title": "Engineering",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/engineering",
+          "/"
+        ],
+        "target": "/anthropic/engineering"
+      },
+      {
         "title": "News",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
@@ -5060,6 +5069,75 @@
       }
     ]
   },
+  "app-sales.net": {
+    "_name": "AppSales",
+    ".": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/:category"
+        ],
+        "target": "/app-salesparams=>{const category=params.category;return`/app-sales${category?`/${category}`:\"\"}`}"
+      },
+      {
+        "title": "Highlights",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/highlights"
+        ],
+        "target": "/app-sales/highlights"
+      },
+      {
+        "title": "Active Sales",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/activesales"
+        ],
+        "target": "/app-sales/activesales"
+      },
+      {
+        "title": "Now Free",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/nowfree"
+        ],
+        "target": "/app-sales/nowfree"
+      },
+      {
+        "title": "Watchlist Charts",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/mostwanted"
+        ],
+        "target": "/app-sales/mostwanted"
+      },
+      {
+        "title": "Watchlist Charts - Last 24h",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/mostwanted"
+        ],
+        "target": "/app-sales/mostwanted/24h"
+      },
+      {
+        "title": "Watchlist Charts - Last Week",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/mostwanted"
+        ],
+        "target": "/app-sales/mostwanted/week"
+      },
+      {
+        "title": "Watchlist Charts - All Time",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/mostwanted"
+        ],
+        "target": "/app-sales/mostwanted/alltime"
+      }
+    ]
+  },
   "apple.com": {
     "_name": "Apple",
     "apps": [
@@ -5089,6 +5167,14 @@
           "/:country/service-programs"
         ],
         "target": "/apple/exchange_repair/:country"
+      },
+      {
+        "title": "Security releases",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/:language/100100"
+        ],
+        "target": "/appleparams=>{const language=params.language;return`/apple/security-releases${language?`/${language}`:\"\"}`}"
       }
     ],
     "podcasts": [
@@ -5772,6 +5858,19 @@
           "/p/:id"
         ],
         "target": "/baidu/tieba/post/lz/:id"
+      }
+    ]
+  },
+  "bakamh.com": {
+    "_name": "巴卡漫画",
+    ".": [
+      {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/manga/:name/"
+        ],
+        "target": "/bakamh/manga/:name"
       }
     ]
   },
@@ -9643,6 +9742,40 @@
       }
     ]
   },
+  "chnmuseum.cn": {
+    "_name": "National Museum Of China",
+    ".": [
+      {
+        "title": "资讯要闻",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/zx/xingnew"
+        ],
+        "target": "/chnmuseum/zx/xingnew"
+      },
+      {
+        "title": "资讯专题",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/zx/xwzt"
+        ],
+        "target": "/chnmuseum/zx/xwzt"
+      }
+    ]
+  },
+  "chongbuluo.com": {
+    "_name": "虫部落",
+    "www": [
+      {
+        "title": "最新发表",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/"
+        ],
+        "target": "/chongbuluo/newthread"
+      }
+    ]
+  },
   "chongdiantou.com": {
     "_name": "充电头网",
     "www": [
@@ -9729,6 +9862,19 @@
           "/"
         ],
         "target": "/cib/whpj"
+      }
+    ]
+  },
+  "cih-index.com": {
+    "_name": "中指研究院",
+    "www": [
+      {
+        "title": "报告",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/report/list/:report"
+        ],
+        "target": "/cih-index/report/list/:report?"
       }
     ]
   },
@@ -13158,7 +13304,7 @@
       }
     ]
   },
-  "flyert.com": {
+  "flyert.com.cn": {
     "_name": "飞客茶馆",
     ".": [
       {
@@ -13168,19 +13314,8 @@
           "/"
         ],
         "target": "/flyert/creditcard/:bank"
-      },
-      {
-        "title": "优惠信息",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/"
-        ],
-        "target": "/flyert/preferential"
       }
-    ]
-  },
-  "flyert.com.cn": {
-    "_name": "飞客茶馆",
+    ],
     "www": [
       {
         "title": "会员说",
@@ -13189,6 +13324,19 @@
           "/forum.php"
         ],
         "target": "/flyert(_,url)=>{const params=[...url.searchParams.entries()].map(([key,value])=>key+\"=\"+value).join(\"&\");return`/forum${params?`/${encodeURIComponent(params)}`:\"\"}`}"
+      }
+    ]
+  },
+  "flyert.com": {
+    "_name": "飞客茶馆",
+    ".": [
+      {
+        "title": "优惠信息",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/"
+        ],
+        "target": "/flyert/preferential"
       }
     ]
   },
@@ -21746,6 +21894,19 @@
       }
     ]
   },
+  "lenovo.com.cn": {
+    "_name": "联想",
+    ".": [
+      {
+        "title": "驱动",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/"
+        ],
+        "target": "/lenovo/drive/:selName"
+      }
+    ]
+  },
   "hey.xyz": {
     "_name": "Lens",
     ".": [
@@ -25310,7 +25471,7 @@
         "title": "最近更新",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
-          "/dm397/new",
+          "/dm514/new",
           "/new",
           "/"
         ],
@@ -25325,7 +25486,7 @@
         "title": "最近更新",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
-          "/dm397/new",
+          "/dm514/new",
           "/new",
           "/"
         ],
@@ -27177,9 +27338,10 @@
         "title": "新聞",
         "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
+          "/home/:category",
           "/"
         ],
-        "target": "/now/news/:category?/:id?"
+        "target": "/now/news/:category?"
       }
     ]
   },
@@ -30875,10 +31037,10 @@
     ]
   },
   "rfi.fr": {
-    "_name": "Radio France Internationale 法国国际广播电台",
+    "_name": "Radio France Internationale",
     ".": [
       {
-        "title": "Unknown",
+        "title": "Generic News",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/*path"
@@ -33870,6 +34032,17 @@
         "target": "/steam/appcommunityfeed/:appid"
       },
       {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid",
+          "/app/:appid/allnews",
+          "/app/:appid/announcements",
+          "/app/:appid/news"
+        ],
+        "target": "/steam/news/:appid"
+      },
+      {
         "title": "Sharefile Changelog",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
@@ -36709,7 +36882,7 @@
     "_name": "Unusual Whales",
     ".": [
       {
-        "title": "News Flow",
+        "title": "News Feed",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
           "/news",
@@ -37103,6 +37276,19 @@
       }
     ]
   },
+  "visualstudio.com": {
+    "_name": "Visual Studio",
+    "code": [
+      {
+        "title": "Code Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/visualstudio/code/blog"
+      }
+    ]
+  },
   "vocus.cc": {
     "_name": "方格子",
     ".": [
@@ -37379,6 +37565,19 @@
           "/"
         ],
         "target": "/wanqu/news"
+      }
+    ]
+  },
+  "warp.dev": {
+    "_name": "Warp",
+    "www": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/warp/blog"
       }
     ]
   },
@@ -38059,6 +38258,14 @@
     "_name": "西安交通大学",
     "ee": [
       {
+        "title": "电气学院通知",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/jzxx/:category?.htm"
+        ],
+        "target": "/xjtu/ee/jzxx/:category?"
+      },
+      {
         "title": "电气学院",
         "docs": "https://docs.rsshub.app/routes/university",
         "source": [
@@ -38600,6 +38807,84 @@
       }
     ]
   },
+  "yuanliao.info": {
+    "_name": "猿料",
+    ".": [
+      {
+        "title": "主题",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/",
+          "/t/:tag"
+        ],
+        "target": "/yuanliaoparams=>{const tag=params.tag;return`/yuanliao${tag?`/${tag}`:\"\"}`}"
+      },
+      {
+        "title": "问题反馈",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/bug-report"
+        ],
+        "target": "/yuanliao/bug-report"
+      },
+      {
+        "title": "Windows",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/windows"
+        ],
+        "target": "/yuanliao/windows"
+      },
+      {
+        "title": "macOS",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/macos"
+        ],
+        "target": "/yuanliao/macos"
+      },
+      {
+        "title": "Linux",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/linux"
+        ],
+        "target": "/yuanliao/linux"
+      },
+      {
+        "title": "意见建议",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/suggestions"
+        ],
+        "target": "/yuanliao/suggestions"
+      },
+      {
+        "title": "插件发布",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/plugins"
+        ],
+        "target": "/yuanliao/plugins"
+      },
+      {
+        "title": "插件需求",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/plugin-needs"
+        ],
+        "target": "/yuanliao/plugin-needs"
+      },
+      {
+        "title": "开发者",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/t/developers"
+        ],
+        "target": "/yuanliao/developers"
+      }
+    ]
+  },
   "yuque.com": {
     "_name": "语雀",
     ".": [
@@ -38684,6 +38969,15 @@
     "_name": "再漫画",
     "manhua": [
       {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/details",
+          "/details/:id"
+        ],
+        "target": "/zaimanhua/comic/:id"
+      },
+      {
         "title": "最近更新",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
@@ -38737,6 +39031,19 @@
           "/u/:id"
         ],
         "target": "/zcool/user/:id"
+      }
+    ]
+  },
+  "zed.dev": {
+    "_name": "Zed",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/zed/blog"
       }
     ]
   },
