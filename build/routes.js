@@ -58561,15 +58561,16 @@ export default {
   },
   "kemono": {
     "routes": {
-      "/:source?/:id?": {
-        "path": "/:source?/:id?",
+      "/:source?/:id?/:type?": {
+        "path": "/:source?/:id?/:type?",
         "categories": [
           "anime"
         ],
         "example": "/kemono",
         "parameters": {
           "source": "Source, see below, Posts by default",
-          "id": "User id, can be found in URL"
+          "id": "User id, can be found in URL",
+          "type": "Content type: announcements or fancards"
         },
         "features": {
           "requireConfig": false,
@@ -58582,16 +58583,35 @@ export default {
         "radar": [
           {
             "source": [
-              "kemono.su/:source/user/:id",
               "kemono.su/"
-            ]
+            ],
+            "target": "/kemono"
+          },
+          {
+            "source": [
+              "kemono.su/:source/user/:id"
+            ],
+            "target": "/kemono/:source/:id"
+          },
+          {
+            "source": [
+              "kemono.su/:source/user/:id/announcements"
+            ],
+            "target": "/kemono/:source/:id/announcements"
+          },
+          {
+            "source": [
+              "kemono.su/:source/user/:id/fancards"
+            ],
+            "target": "/kemono/:source/:id/fancards"
           }
         ],
         "name": "Posts",
         "maintainers": [
-          "nczitzk"
+          "nczitzk",
+          "AiraNadih"
         ],
-        "description": "Sources\n\n| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |\n| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |\n| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |\n\n::: tip\n  When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.\n  There is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.\n:::",
+        "description": "Sources\n\n| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |\n| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |\n| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |\n\n::: tip\n  When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.\n  There is an optinal parameter **limit** which controls the number of posts to fetch, default value is 25.\n  \n  Support for announcements and fancards:\n  - Use `/:source/:id/announcements` to get announcements\n  - Use `/:source/:id/fancards` to get fancards\n:::",
         "location": "index.ts",
         "module": () => import('@/routes/kemono/index.ts')
       }
@@ -78260,15 +78280,41 @@ export default {
         "categories": [
           "social-media"
         ],
-        "example": "/picuki/profile/stefaniejoosten",
+        "example": "/picuki/profile/linustech",
         "parameters": {
-          "id": "Instagram user id",
-          "type": "Type of profile page (profile or tagged)",
-          "functionalFlag": "functional flag, see the table below\n| functionalFlag | Video embedding                         | Fetching Instagram Stories |\n| -------------- | --------------------------------------- | -------------------------- |\n| 0              | off, only show video poster as an image | off                        |\n| 1 (default)    | on                                      | off                        |\n| 10             | on                                      | on                         |\n"
+          "id": "Tiktok user id (without @)",
+          "type": {
+            "description": "Type of profile page",
+            "options": [
+              {
+                "value": "profile",
+                "label": "Profile Page"
+              },
+              {
+                "value": "story",
+                "label": "Story Page"
+              }
+            ],
+            "default": "profile"
+          },
+          "functionalFlag": {
+            "description": "Functional flag for video embedding",
+            "options": [
+              {
+                "value": "0",
+                "label": "Off, only show video poster as an image"
+              },
+              {
+                "value": "1",
+                "label": "On"
+              }
+            ],
+            "default": "1"
+          }
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": false,
+          "requirePuppeteer": true,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -78283,9 +78329,9 @@ export default {
           },
           {
             "source": [
-              "www.picuki.com/profile-tagged/:id"
+              "www.picuki.com/story/:id"
             ],
-            "target": "/profile/:id/tagged"
+            "target": "/profile/:id/story"
           }
         ],
         "name": "User Profile - Picuki",
@@ -78295,13 +78341,12 @@ export default {
           "devinmugen",
           "NekoAria"
         ],
-        "description": "\n::: warning\n  Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.\n  Though, every Story expires after 24 hours, so it may be not so serious.\n:::",
         "location": "profile.ts",
         "module": () => import('@/routes/picuki/profile.ts')
       }
     },
-    "name": "Instagram",
-    "url": "www.instagram.com",
+    "name": "TikTok",
+    "url": "tiktok.com",
     "lang": "en"
   },
   "pikabu": {
@@ -89437,7 +89482,12 @@ export default {
           "uid": "用户 id，网址上直接可以看到"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89468,7 +89518,12 @@ export default {
           "uid": "用户id，网址上直接可以看到"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89500,7 +89555,12 @@ export default {
           "sort": "排序方式，默认为最新"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89550,7 +89610,12 @@ export default {
           }
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89577,7 +89642,12 @@ export default {
           "keyword": "你想订阅的关键词"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89602,7 +89672,12 @@ export default {
           "id": "商品 id，网址上直接可以看到"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -89662,131 +89737,131 @@ export default {
             "description": "榜单ID",
             "options": [
               {
-                "label": "好价品类榜 - 全部",
+                "label": "好价品类榜-全部",
                 "value": "11"
               },
               {
-                "label": "好价品类榜 - 食品生鲜",
+                "label": "好价品类榜-食品生鲜",
                 "value": "12"
               },
               {
-                "label": "好价品类榜 - 电脑数码",
+                "label": "好价品类榜-电脑数码",
                 "value": "13"
               },
               {
-                "label": "好价品类榜 - 运动户外",
+                "label": "好价品类榜-运动户外",
                 "value": "14"
               },
               {
-                "label": "好价品类榜 - 家用电器",
+                "label": "好价品类榜-家用电器",
                 "value": "15"
               },
               {
-                "label": "好价品类榜 - 白菜",
+                "label": "好价品类榜-白菜",
                 "value": "17"
               },
               {
-                "label": "好价品类榜 - 服饰鞋包",
+                "label": "好价品类榜-服饰鞋包",
                 "value": "74"
               },
               {
-                "label": "好价品类榜 - 日用百货",
+                "label": "好价品类榜-日用百货",
                 "value": "75"
               },
               {
-                "label": "好价电商榜 - 券活动",
+                "label": "好价电商榜-券活动",
                 "value": "24"
               },
               {
-                "label": "好价电商榜 - 京东",
+                "label": "好价电商榜-京东",
                 "value": "23"
               },
               {
-                "label": "好价电商榜 - 天猫",
+                "label": "好价电商榜-天猫",
                 "value": "25"
               },
               {
-                "label": "好价电商榜 - 亚马逊中国",
+                "label": "好价电商榜-亚马逊中国",
                 "value": "26"
               },
               {
-                "label": "好价电商榜 - 国美在线",
+                "label": "好价电商榜-国美在线",
                 "value": "27"
               },
               {
-                "label": "好价电商榜 - 苏宁易购",
+                "label": "好价电商榜-苏宁易购",
                 "value": "28"
               },
               {
-                "label": "好价电商榜 - 网易",
+                "label": "好价电商榜-网易",
                 "value": "29"
               },
               {
-                "label": "好价电商榜 - 西集网",
+                "label": "好价电商榜-西集网",
                 "value": "30"
               },
               {
-                "label": "好价电商榜 - 美国亚马逊",
+                "label": "好价电商榜-美国亚马逊",
                 "value": "31"
               },
               {
-                "label": "好价电商榜 - 日本亚马逊",
+                "label": "好价电商榜-日本亚马逊",
                 "value": "32"
               },
               {
-                "label": "好价电商榜 - ebay",
+                "label": "好价电商榜-ebay",
                 "value": "33"
               },
               {
-                "label": "海淘 TOP 榜 - 全部",
+                "label": "海淘 TOP 榜-全部",
                 "value": "39"
               },
               {
-                "label": "海淘 TOP 榜 - 海外直邮",
+                "label": "海淘 TOP 榜-海外直邮",
                 "value": "34"
               },
               {
-                "label": "海淘 TOP 榜 - 美国榜",
+                "label": "海淘 TOP 榜-美国榜",
                 "value": "35"
               },
               {
-                "label": "海淘 TOP 榜 - 欧洲榜",
+                "label": "海淘 TOP 榜-欧洲榜",
                 "value": "36"
               },
               {
-                "label": "海淘 TOP 榜 - 澳新榜",
+                "label": "海淘 TOP 榜-澳新榜",
                 "value": "37"
               },
               {
-                "label": "海淘 TOP 榜 - 亚洲榜",
+                "label": "海淘 TOP 榜-亚洲榜",
                 "value": "38"
               },
               {
-                "label": "海淘 TOP 榜 - 晒物榜",
+                "label": "海淘 TOP 榜-晒物榜",
                 "value": "hsw"
               },
               {
-                "label": "好文排行榜 - 原创",
+                "label": "好文排行榜-原创",
                 "value": "yc"
               },
               {
-                "label": "好文排行榜 - 资讯",
+                "label": "好文排行榜-资讯",
                 "value": "zx"
               },
               {
-                "label": "好物排行榜 - 新晋榜",
+                "label": "好物排行榜-新晋榜",
                 "value": "hwall"
               },
               {
-                "label": "好物排行榜 - 消费众测",
+                "label": "好物排行榜-消费众测",
                 "value": "zc"
               },
               {
-                "label": "好物排行榜 - 新锐品牌",
+                "label": "好物排行榜-新锐品牌",
                 "value": "nb"
               },
               {
-                "label": "好物排行榜 - 好物榜单",
+                "label": "好物排行榜-好物榜单",
                 "value": "hw"
               }
             ]
@@ -89810,7 +89885,12 @@ export default {
           }
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "SMZDM_COOKIE",
+              "description": "什么值得买登录后的 Cookie 值"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -112061,7 +112141,8 @@ export default {
           {
             "source": [
               "www.youtube.com/user/:username",
-              "www.youtube.com/:username"
+              "www.youtube.com/:username",
+              "www.youtube.com/:username/videos"
             ],
             "target": "/user/:username"
           }
@@ -113290,7 +113371,12 @@ export default {
           "id": "作者 id，可在用户主页 URL 中找到"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "ZHIHU_COOKIES",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -113354,7 +113440,12 @@ export default {
           "getAll": "获取全部收藏内容，任意值为打开"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "ZHIHU_COOKIES",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -113450,63 +113541,12 @@ export default {
         ],
         "example": "/zhihu/hot",
         "view": 0,
-        "parameters": {
-          "category": {
-            "description": "分类",
-            "default": "total",
-            "options": [
-              {
-                "value": "total",
-                "label": "全站"
-              },
-              {
-                "value": "focus",
-                "label": "国际"
-              },
-              {
-                "value": "science",
-                "label": "科学"
-              },
-              {
-                "value": "car",
-                "label": "汽车"
-              },
-              {
-                "value": "zvideo",
-                "label": "视频"
-              },
-              {
-                "value": "fashion",
-                "label": "时尚"
-              },
-              {
-                "value": "depth",
-                "label": "时事"
-              },
-              {
-                "value": "digital",
-                "label": "数码"
-              },
-              {
-                "value": "sport",
-                "label": "体育"
-              },
-              {
-                "value": "school",
-                "label": "校园"
-              },
-              {
-                "value": "film",
-                "label": "影视"
-              }
-            ]
-          }
-        },
         "features": {
           "requireConfig": [
             {
               "name": "ZHIHU_COOKIES",
-              "description": ""
+              "description": "",
+              "optional": true
             }
           ],
           "requirePuppeteer": false,
@@ -113518,9 +113558,9 @@ export default {
         "name": "知乎热榜",
         "maintainers": [
           "nczitzk",
-          "pseudoyu"
+          "pseudoyu",
+          "DIYgod"
         ],
-        "description": "::: warning\n  需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。\n:::",
         "location": "hot.ts",
         "module": () => import('@/routes/zhihu/hot.ts')
       },
@@ -113629,7 +113669,12 @@ export default {
           "isTop": "仅精华，默认为否，其他值为是"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "ZHIHU_COOKIES",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -113691,7 +113736,12 @@ export default {
           "id": "专栏 id，可在专栏主页 URL 中找到"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "ZHIHU_COOKIES",
+              "description": ""
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -114868,6 +114918,46 @@ export default {
     "apiRoutes": {},
     "url": "zodgame.xyz",
     "lang": "en"
+  },
+  "zongheng": {
+    "routes": {
+      "/detail/:id": {
+        "path": "/detail/:id",
+        "categories": [
+          "reading"
+        ],
+        "example": "/zongheng/detail/1366535",
+        "parameters": {
+          "id": "作品 ID"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.zongheng.org/detail/:id"
+            ]
+          }
+        ],
+        "name": "章节更新",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.zongheng.com",
+        "location": "detail.ts",
+        "module": () => import('@/routes/zongheng/detail.ts')
+      }
+    },
+    "name": "纵横中文网",
+    "apiRoutes": {},
+    "url": "www.zongheng.com",
+    "lang": "zh-CN"
   },
   "zotero": {
     "routes": {
