@@ -27,12 +27,12 @@ async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
 
     const searchParams = new URLSearchParams({
-        c: 'home',
+        c: 'faxian',
         s: keyword,
         order: 'time',
         f_c: 'zhi',
-        v: 'a',
-        mx_v: 'a',
+        v: 'b',
+        mx_v: 'b',
     });
 
     const browser = await puppeteer({ stealth: true });
