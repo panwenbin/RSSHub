@@ -35,14 +35,31 @@ async function handler(ctx) {
         mx_v: 'b',
     });
 
+    const url = `https://search.smzdm.com/?` + searchParams.toString();
+
     const browser = await puppeteer({ stealth: true });
     const page = await browser.newPage();
 
-    await page.goto(`https://search.smzdm.com/?` + searchParams.toString(), {
-        waitUntil: 'networkidle2',
+    await page.setRequestInterception(true);
+
+    let data = '';
+
+    page.on('request', (req) => {
+        req.continue();
     });
 
-    const data = await page.content();
+    page.on('response', async (response) => {
+        if (response.url() === url) {
+            if (response.status() > 300) {
+                return;
+            }
+            data = await response.text();
+        }
+    });
+
+    await page.goto(url, {
+        waitUntil: 'networkidle2',
+    });
 
     const $ = load(data);
     const list = $('.feed-row-wide');
